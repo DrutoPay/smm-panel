@@ -74,7 +74,7 @@ curl_close($curl);
             $row = $conn->prepare("SELECT * FROM clients WHERE client_id=:id");
             $row->execute(array("id" => $paymentDetails["client_id"]));
             $user = $row->fetch(PDO::FETCH_ASSOC);
-            if (countRow(['table' => 'payments', 'where' => ['client_id' => $user['client_id'], 'payment_method' => 70, 'payment_status' => 1, 'payment_delivery' => 1, 'payment_extra' => $txnid]])) {
+            if (countRow(['table' => 'payments', 'where' => ['client_id' => $user['client_id'], 'payment_method' => 71, 'payment_status' => 1, 'payment_delivery' => 1, 'payment_extra' => $txnid]])) {
                 if ($data['status'] == 'COMPLETED') {
                     $payment = $conn->prepare('SELECT * FROM payments INNER JOIN clients ON clients.client_id=payments.client_id WHERE payments.payment_extra=:extra ');
                     $payment->execute(['extra' => $txnid]);
@@ -118,7 +118,7 @@ curl_close($curl);
                     }
                 } else {
                     $update = $conn->prepare('UPDATE payments SET payment_status=:payment_status WHERE client_id=:client_id, payment_method=:payment_method, payment_delivery=:payment_delivery, payment_extra=:payment_extra');
-                    $update = $update->execute(['payment_status' => 2, 'client_id' => $user['client_id'], 'payment_method' => 70, 'payment_delivery' => 1, 'payment_extra' => $txnid]);
+                    $update = $update->execute(['payment_status' => 2, 'client_id' => $user['client_id'], 'payment_method' => 71, 'payment_delivery' => 1, 'payment_extra' => $txnid]);
                 }
             } else{
                 errorExit("Payment Not Found");
